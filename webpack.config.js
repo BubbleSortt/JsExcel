@@ -11,6 +11,7 @@ console.log('is prod', isProd);
 console.log('is dev', isDev);
 
 const filename = ext => isDev ? `app.${ext}` : `app.[hash].${ext}`;
+
 const jsLoaders = () => {
   const loaders = [
     {
@@ -20,6 +21,7 @@ const jsLoaders = () => {
       }
     }
   ];
+
   if (isDev) {
     loaders.push('eslint-loader');
   }
@@ -43,8 +45,7 @@ module.exports = {
   },
   devtool: isDev ? 'source-map' : false,
   devServer: {
-    port: 8081,
-    hot: isDev
+    port: 8081
   },
   plugins: [
     new CopyPlugin({
@@ -88,6 +89,16 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: jsLoaders()
+      },
+      {
+        test: /\.(ttf|eot|woff|svg|woff2)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'fonts',
+            name: '[name].[ext]'
+          }
+        }
       }
     ],
   },

@@ -1,3 +1,27 @@
-body {
-  background: red;
+@import "~normalize.css";
+@import "variables";
+@import "mixins";
+@import "header";
+@import "toolbar";
+@import "formula";
+@import "table";
+@import "fonts";
+@import "dashboard";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+}
+
+.excel {
+  position: relative;
+  height: 100%;
+  max-width: 100%;
+}
+
