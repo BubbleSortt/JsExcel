@@ -7,9 +7,6 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
 
-console.log('is prod', isProd);
-console.log('is dev', isDev);
-
 const filename = ext => isDev ? `app.${ext}` : `app.[hash].${ext}`;
 
 const jsLoaders = () => {
@@ -17,7 +14,8 @@ const jsLoaders = () => {
     {
       loader: 'babel-loader',
       options: {
-        presets: ['@babel/preset-env']
+        presets: ['@babel/preset-env'],
+        plugins: ['@babel/plugin-proposal-class-properties']
       }
     }
   ];
@@ -31,6 +29,7 @@ const jsLoaders = () => {
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
+  mode: 'development',
   entry: ['@babel/polyfill', './index.js'],
   output: {
     filename: filename('js'),
@@ -45,7 +44,8 @@ module.exports = {
   },
   devtool: isDev ? 'source-map' : false,
   devServer: {
-    port: 8081
+    port: 8081,
+    hot: isDev
   },
   plugins: [
     new CopyPlugin({
@@ -66,7 +66,6 @@ module.exports = {
         removeComments: isProd,
         collapseWhitespace: isProd
       }
-
     })
   ],
   module: {
@@ -102,5 +101,4 @@ module.exports = {
       }
     ],
   },
-
 };
